@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/news.dart';
-import 'package:news_app/data/widgets.dart';
+import 'package:news_app/widgets/news_tile.dart';
 
 class CategoryNews extends StatefulWidget {
   final String newsCategory;
@@ -12,20 +12,19 @@ class CategoryNews extends StatefulWidget {
 }
 
 class _CategoryNewsState extends State<CategoryNews> {
-  var newslist;
+  var newsList;
   bool _loading = true;
 
   @override
   void initState() {
     getNews();
-    // TODO: implement initState
     super.initState();
   }
 
   void getNews() async {
     NewsForCategory news = NewsForCategory();
     await news.getNewsForCategory(widget.newsCategory);
-    newslist = news.news;
+    newsList = news.news;
     setState(() {
       _loading = false;
     });
@@ -77,16 +76,16 @@ class _CategoryNewsState extends State<CategoryNews> {
                 child: Container(
                   margin: EdgeInsets.only(top: 16),
                   child: ListView.builder(
-                      itemCount: newslist.length,
+                      itemCount: newsList.length,
                       shrinkWrap: true,
                       physics: ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return NewsTile(
-                          imgUrl: newslist[index].urlToImage ?? "",
-                          title: newslist[index].title ?? "",
-                          desc: newslist[index].description ?? "",
-                          content: newslist[index].content ?? "",
-                          posturl: newslist[index].articleUrl ?? "",
+                          imgUrl: newsList[index].urlToImage ?? "",
+                          title: newsList[index].title ?? "",
+                          desc: newsList[index].description ?? "",
+                          content: newsList[index].content ?? "",
+                          postUrl: newsList[index].articleUrl ?? "",
                         );
                       }),
                 ),

@@ -1,41 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/screens/article_view.dart';
 
-Widget MyAppBar() {
-  return AppBar(
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'News',
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        Text(
-          'App',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.w600,
-          ),
-        )
-      ],
-    ),
-    backgroundColor: Colors.transparent,
-    elevation: 0.0,
-  );
-}
-
 class NewsTile extends StatelessWidget {
-  final String imgUrl, title, desc, content, posturl;
+  final String imgUrl, title, desc, content, postUrl;
 
   NewsTile(
       {this.imgUrl,
       this.desc,
       this.title,
       this.content,
-      @required this.posturl});
+      @required this.postUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +19,7 @@ class NewsTile extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ArticleView(
-              postUrl: posturl,
+              postUrl: postUrl,
             ),
           ),
         );

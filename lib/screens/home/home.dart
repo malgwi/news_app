@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/data/data.dart';
 import 'package:news_app/data/news.dart';
-import 'package:news_app/data/widgets.dart';
+import 'package:news_app/widgets/news_tile.dart';
+import 'package:news_app/widgets/widgets.dart';
 import 'package:news_app/models/category_model.dart';
 
 import 'category_card.dart';
@@ -13,14 +14,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _loading;
-  var newslist;
+  var newsList;
 
   List<CategoryModel> categories = List<CategoryModel>();
 
   void getNews() async {
     News news = News();
     await news.getNews();
-    newslist = news.news;
+    newsList = news.news;
     setState(() {
       _loading = false;
     });
@@ -29,7 +30,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _loading = true;
-    // TODO: implement initState
     super.initState();
 
     categories = getCategory();
@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(),
+      appBar: myAppBar(),
       body: SafeArea(
         child: _loading
             ? Center(
@@ -64,16 +64,16 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: EdgeInsets.only(top: 16),
                         child: ListView.builder(
-                            itemCount: newslist.length,
+                            itemCount: newsList.length,
                             shrinkWrap: true,
                             physics: ClampingScrollPhysics(),
                             itemBuilder: (context, index) {
                               return NewsTile(
-                                imgUrl: newslist[index].urlToImage ?? "",
-                                title: newslist[index].title ?? "",
-                                desc: newslist[index].description ?? "",
-                                content: newslist[index].content ?? "",
-                                posturl: newslist[index].articleUrl ?? "",
+                                imgUrl: newsList[index].urlToImage ?? "",
+                                title: newsList[index].title ?? "",
+                                desc: newsList[index].description ?? "",
+                                content: newsList[index].content ?? "",
+                                postUrl: newsList[index].articleUrl ?? "",
                               );
                             }),
                       )
