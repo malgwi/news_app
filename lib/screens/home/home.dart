@@ -13,12 +13,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool _loading;
+  bool _loading = false;
   var newsList;
 
   List<CategoryModel> categories = List<CategoryModel>();
 
   void getNews() async {
+    setState(() {
+      _loading = true;
+    });
     News news = News();
     await news.getNews();
     newsList = news.news;
@@ -29,9 +32,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    _loading = true;
     super.initState();
-
     categories = getCategory();
     getNews();
   }
@@ -40,6 +41,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: myAppBar(),
       body: SafeArea(
+          child: RefreshIndicator(
+        onRefresh: () => refresh(),
         child: _loading
             ? Center(
                 child: CircularProgressIndicator(),
@@ -81,7 +84,11 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-      ),
+      )),
     );
+  }
+
+  refresh() {
+    return getNews();
   }
 }
