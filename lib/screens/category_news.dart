@@ -71,26 +71,29 @@ class _CategoryNewsState extends State<CategoryNews> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : SingleChildScrollView(
-              child: Container(
-                child: Container(
-                  margin: EdgeInsets.only(top: 16),
-                  child: ListView.builder(
-                      itemCount: newsList.length,
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return NewsTile(
-                          imgUrl: newsList[index].urlToImage ?? "",
-                          title: newsList[index].title ?? "",
-                          desc: newsList[index].description ?? "",
-                          content: newsList[index].content ?? "",
-                          postUrl: newsList[index].articleUrl ?? "",
-                        );
-                      }),
-                ),
+          : Container(
+              margin: EdgeInsets.only(top: 16),
+              child: RefreshIndicator(
+                onRefresh: () => refresh(),
+                child: ListView.builder(
+                    itemCount: newsList.length,
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return NewsTile(
+                        imgUrl: newsList[index].urlToImage ?? "",
+                        title: newsList[index].title ?? "",
+                        desc: newsList[index].description ?? "",
+                        content: newsList[index].content ?? "",
+                        postUrl: newsList[index].articleUrl ?? "",
+                      );
+                    }),
               ),
             ),
     );
+  }
+
+  refresh() {
+    return getNews();
   }
 }
